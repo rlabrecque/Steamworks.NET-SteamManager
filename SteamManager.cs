@@ -3,7 +3,7 @@
 // Where that dedication is not recognized you are granted a perpetual,
 // irrevokable license to copy and modify this files as you see fit.
 //
-// Version: 1.0.0
+// Version: 1.0.1
 
 using UnityEngine;
 using System.Collections;
@@ -17,9 +17,7 @@ class SteamManager : MonoBehaviour {
 	private static SteamManager m_instance;
 	private static SteamManager Instance {
 		get {
-			return m_instance ??
-				(m_instance = GameObject.FindObjectOfType<SteamManager>()) ??
-				(m_instance = new GameObject("SteamManager").AddComponent<SteamManager>());
+			return m_instance ?? new GameObject("SteamManager").AddComponent<SteamManager>();
 		}
 	}
 
@@ -109,6 +107,10 @@ class SteamManager : MonoBehaviour {
 	// Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
 	// Thus it is not recommended to perform any Steamworks work in other OnDestroy functions as the order of execution can not be garenteed upon Shutdown. Prefer OnDisable().
 	private void OnDestroy() {
+		if (m_instance != this) {
+			return;
+		}
+
 		m_instance = null;
 
 		if (!m_bInitialized) {
