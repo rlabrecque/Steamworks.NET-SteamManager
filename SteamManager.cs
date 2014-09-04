@@ -14,10 +14,10 @@ using Steamworks;
 // It handles the basics of starting up and shutting down the SteamAPI for use.
 //
 class SteamManager : MonoBehaviour {
-	private static SteamManager m_instance;
+	private static SteamManager s_instance;
 	private static SteamManager Instance {
 		get {
-			return m_instance ?? new GameObject("SteamManager").AddComponent<SteamManager>();
+			return s_instance ?? new GameObject("SteamManager").AddComponent<SteamManager>();
 		}
 	}
 
@@ -35,11 +35,11 @@ class SteamManager : MonoBehaviour {
 
 	private void Awake() {
 		// Only one instance of SteamManager at a time!
-		if (m_instance != null) {
+		if (s_instance != null) {
 			Destroy(gameObject);
 			return;
 		}
-		m_instance = this;
+		s_instance = this;
 
 		// We want our SteamManager Instance to persist across scenes.
 		DontDestroyOnLoad(gameObject);
@@ -86,8 +86,8 @@ class SteamManager : MonoBehaviour {
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.
 	private void OnEnable() {
-		if (m_instance == null) {
-			m_instance = this;
+		if (s_instance == null) {
+			s_instance = this;
 		}
 
 		if (!m_bInitialized) {
@@ -107,11 +107,11 @@ class SteamManager : MonoBehaviour {
 	// Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
 	// Thus it is not recommended to perform any Steamworks work in other OnDestroy functions as the order of execution can not be garenteed upon Shutdown. Prefer OnDisable().
 	private void OnDestroy() {
-		if (m_instance != this) {
+		if (s_instance != this) {
 			return;
 		}
 
-		m_instance = null;
+		s_instance = null;
 
 		if (!m_bInitialized) {
 			return;
