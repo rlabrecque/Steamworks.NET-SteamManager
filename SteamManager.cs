@@ -85,6 +85,8 @@ class SteamManager : MonoBehaviour {
 		// Steam Client is not running.
 		// Launching from outside of steam without a steam_appid.txt file in place.
 		// Running under a different OS User or Access level (for example running "as administrator")
+		// Ensure that you own a license for the AppId on your active Steam account
+		// If your AppId is not completely set up. Either in Release State: Unavailable, or if it's missing default packages.
 		// Valve's documentation for this is located here:
 		// https://partner.steamgames.com/documentation/getting_started
 		// https://partner.steamgames.com/documentation/example // Under: Common Build Problems
