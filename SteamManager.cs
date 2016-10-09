@@ -3,7 +3,7 @@
 // Where that dedication is not recognized you are granted a perpetual,
 // irrevokable license to copy and modify this files as you see fit.
 //
-// Version: 1.0.3
+// Version: 1.0.4
 
 using UnityEngine;
 using System.Collections;
@@ -14,7 +14,7 @@ using Steamworks;
 // It handles the basics of starting up and shutting down the SteamAPI for use.
 //
 [DisallowMultipleComponent]
-class SteamManager : MonoBehaviour {
+public class SteamManager : MonoBehaviour {
 	private static SteamManager s_instance;
 	private static SteamManager Instance {
 		get {
