@@ -47,7 +47,7 @@ public class SteamManager : MonoBehaviour {
 		Debug.LogWarning(pchDebugText);
 	}
 
-	protected void Awake() {
+	protected virtual void Awake() {
 		// Only one instance of SteamManager at a time!
 		if (s_instance != null) {
 			Destroy(gameObject);
@@ -113,7 +113,7 @@ public class SteamManager : MonoBehaviour {
 	}
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.
-	protected void OnEnable() {
+	protected virtual void OnEnable() {
 		if (s_instance == null) {
 			s_instance = this;
 		}
@@ -133,7 +133,7 @@ public class SteamManager : MonoBehaviour {
 	// OnApplicationQuit gets called too early to shutdown the SteamAPI.
 	// Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
 	// Thus it is not recommended to perform any Steamworks work in other OnDestroy functions as the order of execution can not be garenteed upon Shutdown. Prefer OnDisable().
-	protected void OnDestroy() {
+	protected virtual void OnDestroy() {
 		if (s_instance != this) {
 			return;
 		}
@@ -147,7 +147,7 @@ public class SteamManager : MonoBehaviour {
 		SteamAPI.Shutdown();
 	}
 
-	protected void Update() {
+	protected virtual void Update() {
 		if (!m_bInitialized) {
 			return;
 		}
