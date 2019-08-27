@@ -21,8 +21,8 @@ using Steamworks;
 //
 [DisallowMultipleComponent]
 public class SteamManager : MonoBehaviour {
-	private static SteamManager s_instance;
-	private static SteamManager Instance {
+	protected static SteamManager s_instance;
+	protected static SteamManager Instance {
 		get {
 			if (s_instance == null) {
 				return new GameObject("SteamManager").AddComponent<SteamManager>();
@@ -33,21 +33,21 @@ public class SteamManager : MonoBehaviour {
 		}
 	}
 
-	private static bool s_EverInitialized;
+	protected static bool s_EverInitialized;
 
-	private bool m_bInitialized;
+	protected bool m_bInitialized;
 	public static bool Initialized {
 		get {
 			return Instance.m_bInitialized;
 		}
 	}
 
-	private SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
-	private static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
+	protected SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
+	protected static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
 		Debug.LogWarning(pchDebugText);
 	}
 
-	private void Awake() {
+	protected void Awake() {
 		// Only one instance of SteamManager at a time!
 		if (s_instance != null) {
 			Destroy(gameObject);
@@ -113,7 +113,7 @@ public class SteamManager : MonoBehaviour {
 	}
 
 	// This should only ever get called on first load and after an Assembly reload, You should never Disable the Steamworks Manager yourself.
-	private void OnEnable() {
+	protected void OnEnable() {
 		if (s_instance == null) {
 			s_instance = this;
 		}
@@ -133,7 +133,7 @@ public class SteamManager : MonoBehaviour {
 	// OnApplicationQuit gets called too early to shutdown the SteamAPI.
 	// Because the SteamManager should be persistent and never disabled or destroyed we can shutdown the SteamAPI here.
 	// Thus it is not recommended to perform any Steamworks work in other OnDestroy functions as the order of execution can not be garenteed upon Shutdown. Prefer OnDisable().
-	private void OnDestroy() {
+	protected void OnDestroy() {
 		if (s_instance != this) {
 			return;
 		}
@@ -147,7 +147,7 @@ public class SteamManager : MonoBehaviour {
 		SteamAPI.Shutdown();
 	}
 
-	private void Update() {
+	protected void Update() {
 		if (!m_bInitialized) {
 			return;
 		}
