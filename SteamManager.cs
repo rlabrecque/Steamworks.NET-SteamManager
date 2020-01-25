@@ -22,6 +22,8 @@ using Steamworks;
 [DisallowMultipleComponent]
 public class SteamManager : MonoBehaviour {
 #if !DISABLESTEAMWORKS
+	protected static bool s_EverInitialized = false;
+
 	protected static SteamManager s_instance;
 	protected static SteamManager Instance {
 		get {
@@ -34,9 +36,7 @@ public class SteamManager : MonoBehaviour {
 		}
 	}
 
-	protected static bool s_EverInitialized;
-
-	protected bool m_bInitialized;
+	protected bool m_bInitialized = false;
 	public static bool Initialized {
 		get {
 			return Instance.m_bInitialized;
