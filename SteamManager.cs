@@ -9,11 +9,11 @@
 #define DISABLESTEAMWORKS
 #endif
 
-#if !DISABLESTEAMWORKS
-
 using UnityEngine;
+#if !DISABLESTEAMWORKS
 using System.Collections;
 using Steamworks;
+#endif
 
 //
 // The SteamManager provides a base implementation of Steamworks.NET on which you can build upon.
@@ -21,6 +21,7 @@ using Steamworks;
 //
 [DisallowMultipleComponent]
 public class SteamManager : MonoBehaviour {
+#if !DISABLESTEAMWORKS
 	protected static SteamManager s_instance;
 	protected static SteamManager Instance {
 		get {
@@ -155,6 +156,11 @@ public class SteamManager : MonoBehaviour {
 		// Run Steam client callbacks
 		SteamAPI.RunCallbacks();
 	}
-}
-
+#else
+	public static bool Initialized {
+		get {
+			return false;
+		}
+	}
 #endif // !DISABLESTEAMWORKS
+}
