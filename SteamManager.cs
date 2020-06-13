@@ -48,6 +48,16 @@ public class SteamManager : MonoBehaviour {
 		Debug.LogWarning(pchDebugText);
 	}
 
+#if UNITY_VERSION_2019_3_OR_NEWER
+	// In case of disabled Domain Reload, reset static members before entering Play Mode.
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+	private static void InitOnPlayMode()
+	{
+		s_EverInitialized = false;
+		s_Instance = null;
+	}
+#endif
+
 	protected virtual void Awake() {
 		// Only one instance of SteamManager at a time!
 		if (s_instance != null) {
