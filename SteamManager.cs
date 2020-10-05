@@ -3,7 +3,7 @@
 // Where that dedication is not recognized you are granted a perpetual,
 // irrevocable license to copy and modify this file as you see fit.
 //
-// Version: 1.0.10
+// Version: 1.0.11
 
 #if UNITY_ANDROID || UNITY_IOS || UNITY_TIZEN || UNITY_TVOS || UNITY_WEBGL || UNITY_WSA || UNITY_PS4 || UNITY_WII || UNITY_XBOXONE || UNITY_SWITCH
 #define DISABLESTEAMWORKS
@@ -44,6 +44,8 @@ public class SteamManager : MonoBehaviour {
 	}
 
 	protected SteamAPIWarningMessageHook_t m_SteamAPIWarningMessageHook;
+
+	[AOT.MonoPInvokeCallback(typeof(SteamAPIWarningMessageHook_t))]
 	protected static void SteamAPIDebugTextHook(int nSeverity, System.Text.StringBuilder pchDebugText) {
 		Debug.LogWarning(pchDebugText);
 	}
