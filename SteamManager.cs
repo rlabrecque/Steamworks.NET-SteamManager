@@ -141,6 +141,18 @@ public class SteamManager : MonoBehaviour {
 			m_SteamAPIWarningMessageHook = new SteamAPIWarningMessageHook_t(SteamAPIDebugTextHook);
 			SteamClient.SetWarningMessageHook(m_SteamAPIWarningMessageHook);
 		}
+		
+        CallbackDispatcher.OnSteamExceptionEvent += OnSteamException;
+	}
+
+	protected virtual void OnDisable()
+	{
+		CallbackDispatcher.OnSteamExceptionEvent -= OnSteamException;
+    }
+
+	public static void OnSteamException(System.Exception e)
+	{
+		Debug.LogException(e); 
 	}
 
 	// OnApplicationQuit gets called too early to shutdown the SteamAPI.
